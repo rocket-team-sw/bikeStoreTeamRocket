@@ -28,7 +28,7 @@ import com.RocketbackEndJwt.api.service.UserDao;
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*")
-public class UsuarioControlador {
+public class UsuarioController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -70,7 +70,7 @@ public class UsuarioControlador {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		JwtUser customJWTUser = (JwtUser) authentication.getPrincipal();
 		Usuario userAux = usuarioDao.findByEmail(correo);
-		System.out.println(correo);
+
 		try {
 
 			usuarioDao.delete(userAux);
