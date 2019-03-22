@@ -1,5 +1,7 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.sql.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,11 +41,17 @@ public class Bicicleta {
 	@Column(name = "usada")
 	private boolean usada;
 	
+	@Column(name = "fecha_borrado")
+	private Date fecha_borrado;
+	
 	@ManyToOne
 	private Categoria categoria;
 	
 	@ManyToOne
 	private Marca marca;
+	
+	@ManyToOne
+	private Modelo modelo;
 	
 
 	public Bicicleta() {
