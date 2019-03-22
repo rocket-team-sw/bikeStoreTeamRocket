@@ -1,5 +1,7 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.sql.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-@Entity
-@Table(name = "bicicletas")
-@TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Bicicletas {
+import org.hibernate.annotations.CreationTimestamp;
 
-	
+@Entity
+@Table(name = "modelos")
+@TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
+public class Modelo {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,34 +26,31 @@ public class Bicicletas {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	@Column(name = "referencia")
-	private String referencia;
-	
 	@Column(name = "nombre")
 	private String nombre;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@Column(name = "precio")
-	private Long precio;
+	@Column(name = "fecha_creacion")
+	@CreationTimestamp
+	private Date fecha_creacion;
 	
-	@Column(name = "usada")
-	private boolean usada;
+	@Column(name = "fecha_borrado")
+	private Date fecha_borrado;
 
-	public Bicicletas() {
+	public Modelo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bicicletas(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada) {
+	public Modelo(Long id, String nombre, String descripcion, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
-		this.referencia = referencia;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.precio = precio;
-		this.usada = usada;
+		this.fecha_creacion = fecha_creacion;
+		this.fecha_borrado = fecha_borrado;
 	}
 
 	public Long getId() {
@@ -59,14 +59,6 @@ public class Bicicletas {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getReferencia() {
-		return referencia;
-	}
-
-	public void setReferencia(String referencia) {
-		this.referencia = referencia;
 	}
 
 	public String getNombre() {
@@ -85,25 +77,26 @@ public class Bicicletas {
 		this.descripcion = descripcion;
 	}
 
-	public Long getPrecio() {
-		return precio;
+	public Date getFecha_creacion() {
+		return fecha_creacion;
 	}
 
-	public void setPrecio(Long precio) {
-		this.precio = precio;
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 
-	public boolean isUsada() {
-		return usada;
+	public Date getFecha_borrado() {
+		return fecha_borrado;
 	}
 
-	public void setUsada(boolean usada) {
-		this.usada = usada;
+	public void setFecha_borrado(Date fecha_borrado) {
+		this.fecha_borrado = fecha_borrado;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-		
+	
+	
 	
 }

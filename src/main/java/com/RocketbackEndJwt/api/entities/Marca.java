@@ -14,10 +14,10 @@ import javax.persistence.TableGenerator;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "modelos")
+@Table(name = "marcas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Modelos {
-
+public class Marca {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,12 +39,12 @@ public class Modelos {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Modelos() {
+	public Marca() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Modelos(Long id, String nombre, String descripcion, Date fecha_creacion, Date fecha_borrado) {
+	public Marca(Long id, String nombre, String descripcion, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -99,4 +99,5 @@ public class Modelos {
 	
 	
 	
+
 }
