@@ -28,14 +28,10 @@ public class Compra  implements Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-<<<<<<< HEAD:src/main/java/com/RocketbackEndJwt/api/entities/Compras.java
-
-	@Column(name = "clienteid")
-	private Cliente clienteid;
-=======
+	
 	@Column(name = "cliente_id")
 	private Long clienteId;
->>>>>>> master:src/main/java/com/RocketbackEndJwt/api/entities/Compra.java
+
 	
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp 

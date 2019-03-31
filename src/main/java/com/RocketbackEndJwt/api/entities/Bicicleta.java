@@ -60,13 +60,6 @@ public class Bicicleta implements Serializable {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 	
-<<<<<<< HEAD
-	@Column(name = "marcaId")
-	private Marca marca;
-	
-	@Column(name = "modeloId")
-	private Modelo modelo;
-=======
 	@Column(name = "categoria_id")
 	private Long categoria;
 	
@@ -75,7 +68,7 @@ public class Bicicleta implements Serializable {
 	
 	@Column(name = "modelo_id")
 	private Long modelo;
->>>>>>> master
+
 	
 
 	public Bicicleta() {

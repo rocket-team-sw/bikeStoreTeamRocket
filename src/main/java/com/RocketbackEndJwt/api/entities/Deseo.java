@@ -28,21 +28,12 @@ public class Deseo implements Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-<<<<<<< HEAD:src/main/java/com/RocketbackEndJwt/api/entities/Deseos.java
 
-	@Column(name = "clienteid")
-	private Cliente clienteid;
-	
-
-	@Column(name = "bicicletasid")
-	private Bicicleta bicicletasid;
-=======
 	@Column(name = "cliente_id")
 	private Long clienteId;
 	
 	@Column(name = "bicicleta_id")
 	private Long bicicletaId;
->>>>>>> master:src/main/java/com/RocketbackEndJwt/api/entities/Deseo.java
 	
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp 
