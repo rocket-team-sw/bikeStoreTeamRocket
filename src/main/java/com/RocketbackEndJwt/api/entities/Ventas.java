@@ -27,7 +27,7 @@ public class Ventas {
 	private Long id;
 	
 	
-	@ManyToOne 
+
 	@Column(name = "clienteid")
 	private Cliente clienteid;
 	

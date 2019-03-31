@@ -44,13 +44,10 @@ public class Bicicleta {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 	
-	@ManyToOne
-	private Categoria categoria;
-	
-	@ManyToOne
+	@Column(name = "marcaId")
 	private Marca marca;
 	
-	@ManyToOne
+	@Column(name = "modeloId")
 	private Modelo modelo;
 	
 

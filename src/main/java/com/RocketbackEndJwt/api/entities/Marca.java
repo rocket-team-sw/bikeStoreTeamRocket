@@ -35,7 +35,7 @@ public class Marca {
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp
 	private Date fecha_creacion;
-	
+
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 

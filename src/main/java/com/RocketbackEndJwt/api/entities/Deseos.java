@@ -25,11 +25,11 @@ public class Deseos {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	@ManyToOne 
+
 	@Column(name = "clienteid")
 	private Cliente clienteid;
 	
-	@ManyToOne 
+
 	@Column(name = "bicicletasid")
 	private Bicicleta bicicletasid;
 	

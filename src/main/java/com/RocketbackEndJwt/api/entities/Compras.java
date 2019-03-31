@@ -25,7 +25,7 @@ public class Compras {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	@ManyToOne 
+
 	@Column(name = "clienteid")
 	private Cliente clienteid;
 	
