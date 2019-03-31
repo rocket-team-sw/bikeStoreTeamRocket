@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
@@ -13,23 +14,25 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 @Entity
 @Table(name = "ventas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Ventas {
-	
+public class Deseo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
+	@Column(name = "cliente_id")
+	private Long clienteId;
 	
-	@ManyToOne 
-	@Column(name = "clienteid")
-	private Cliente clienteid;
+	@Column(name = "bicicleta_id")
+	private Long bicicletaId;
 	
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp 
@@ -38,15 +41,16 @@ public class Ventas {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Ventas() {
+	public Deseo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ventas(Long id, Cliente clienteid, Date fecha_creacion, Date fecha_borrado) {
+	public Deseo(Long id, Long clienteId, Long bicicletaId, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
-		this.clienteid = clienteid;
+		this.clienteId = clienteId;
+		this.bicicletaId = bicicletaId;
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_borrado = fecha_borrado;
 	}
@@ -59,12 +63,20 @@ public class Ventas {
 		this.id = id;
 	}
 
-	public Cliente getClienteid() {
-		return clienteid;
+	public Long getClienteId() {
+		return clienteId;
 	}
 
-	public void setClienteid(Cliente clienteid) {
-		this.clienteid = clienteid;
+	public void setClienteId(Long clienteId) {
+		this.clienteId = clienteId;
+	}
+
+	public Long getBicicletaId() {
+		return bicicletaId;
+	}
+
+	public void setBicicletaId(Long bicicletaId) {
+		this.bicicletaId = bicicletaId;
 	}
 
 	public Date getFecha_creacion() {
@@ -82,6 +94,4 @@ public class Ventas {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
-	
-
 }
