@@ -1,1 +1,4 @@
 target/classes/com/RocketbackEndJwt/api/**/*.class
+**/*.class
+**/*.prefs
+**/*.MF
