@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
@@ -13,23 +14,28 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 @Entity
-@Table(name = "ventas")
+@Table(name = "compras")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Ventas {
-	
+public class Compra  implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	
+<<<<<<< HEAD:src/main/java/com/RocketbackEndJwt/api/entities/Compras.java
 
 	@Column(name = "clienteid")
 	private Cliente clienteid;
+=======
+	@Column(name = "cliente_id")
+	private Long clienteId;
+>>>>>>> master:src/main/java/com/RocketbackEndJwt/api/entities/Compra.java
 	
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp 
@@ -38,15 +44,15 @@ public class Ventas {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Ventas() {
+	public Compra() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ventas(Long id, Cliente clienteid, Date fecha_creacion, Date fecha_borrado) {
+	public Compra(Long id, Long clienteid, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
-		this.clienteid = clienteid;
+		this.clienteId = clienteid;
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_borrado = fecha_borrado;
 	}
@@ -59,12 +65,12 @@ public class Ventas {
 		this.id = id;
 	}
 
-	public Cliente getClienteid() {
-		return clienteid;
+	public Long getClienteid() {
+		return clienteId;
 	}
 
-	public void setClienteid(Cliente clienteid) {
-		this.clienteid = clienteid;
+	public void setClienteid(Long clienteid) {
+		this.clienteId = clienteid;
 	}
 
 	public Date getFecha_creacion() {
@@ -83,5 +89,6 @@ public class Ventas {
 		this.fecha_borrado = fecha_borrado;
 	}
 	
+
 
 }

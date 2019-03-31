@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
@@ -15,9 +16,24 @@ import javax.persistence.TableGenerator;
 @Entity
 @Table(name = "bicicletas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Bicicleta {
+public class Bicicleta implements Serializable {
 
 	
+	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada,
+			Date fecha_borrado, Long categoria, Long marca, Long modelo) {
+		super();
+		this.id = id;
+		this.referencia = referencia;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.usada = usada;
+		this.fecha_borrado = fecha_borrado;
+		this.categoria = categoria;
+		this.marca = marca;
+		this.modelo = modelo;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -44,11 +60,22 @@ public class Bicicleta {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 	
+<<<<<<< HEAD
 	@Column(name = "marcaId")
 	private Marca marca;
 	
 	@Column(name = "modeloId")
 	private Modelo modelo;
+=======
+	@Column(name = "categoria_id")
+	private Long categoria;
+	
+	@Column(name = "marca_id")
+	private Long marca;
+	
+	@Column(name = "modelo_id")
+	private Long modelo;
+>>>>>>> master
 	
 
 	public Bicicleta() {
@@ -112,11 +139,6 @@ public class Bicicleta {
 
 	public void setUsada(boolean usada) {
 		this.usada = usada;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-		
+	}	
 	
 }

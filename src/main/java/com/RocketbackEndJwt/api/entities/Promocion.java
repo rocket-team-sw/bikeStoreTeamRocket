@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
@@ -17,7 +18,9 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name = "promociones")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Promociones {
+public class Promocion implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +32,7 @@ public class Promociones {
 	private String nombre;
 	
 	@Column(name = "descripcion")
-	@Size(min=20)
+	@Size(min=10)
 	@Size(max=250)
 	private String descripcion;
 	
@@ -51,12 +54,12 @@ public class Promociones {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Promociones() {
+	public Promocion() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Promociones(Long id, String nombre, @Size(min = 20) @Size(max = 250) String descripcion, float precio,
+	public Promocion(Long id, String nombre, @Size(min = 10) @Size(max = 250) String descripcion, float precio,
 			Date desde, Date hasta, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;

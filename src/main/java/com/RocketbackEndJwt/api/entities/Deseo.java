@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Basic;
@@ -17,7 +18,9 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name = "ventas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Deseos {
+public class Deseo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,7 @@ public class Deseos {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
+<<<<<<< HEAD:src/main/java/com/RocketbackEndJwt/api/entities/Deseos.java
 
 	@Column(name = "clienteid")
 	private Cliente clienteid;
@@ -32,6 +36,13 @@ public class Deseos {
 
 	@Column(name = "bicicletasid")
 	private Bicicleta bicicletasid;
+=======
+	@Column(name = "cliente_id")
+	private Long clienteId;
+	
+	@Column(name = "bicicleta_id")
+	private Long bicicletaId;
+>>>>>>> master:src/main/java/com/RocketbackEndJwt/api/entities/Deseo.java
 	
 	@Column(name = "fecha_creacion")
 	@CreationTimestamp 
@@ -40,16 +51,16 @@ public class Deseos {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Deseos() {
+	public Deseo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Deseos(Long id, Cliente clienteid, Bicicleta bicicletasid, Date fecha_creacion, Date fecha_borrado) {
+	public Deseo(Long id, Long clienteId, Long bicicletaId, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
-		this.clienteid = clienteid;
-		this.bicicletasid = bicicletasid;
+		this.clienteId = clienteId;
+		this.bicicletaId = bicicletaId;
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_borrado = fecha_borrado;
 	}
@@ -62,20 +73,20 @@ public class Deseos {
 		this.id = id;
 	}
 
-	public Cliente getClienteid() {
-		return clienteid;
+	public Long getClienteId() {
+		return clienteId;
 	}
 
-	public void setClienteid(Cliente clienteid) {
-		this.clienteid = clienteid;
+	public void setClienteId(Long clienteId) {
+		this.clienteId = clienteId;
 	}
 
-	public Bicicleta getBicicletasid() {
-		return bicicletasid;
+	public Long getBicicletaId() {
+		return bicicletaId;
 	}
 
-	public void setBicicletasid(Bicicleta bicicletasid) {
-		this.bicicletasid = bicicletasid;
+	public void setBicicletaId(Long bicicletaId) {
+		this.bicicletaId = bicicletaId;
 	}
 
 	public Date getFecha_creacion() {
@@ -93,7 +104,4 @@ public class Deseos {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
-
-	
-	
 }
