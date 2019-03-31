@@ -8,47 +8,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "modelos")
+@Table(name = "compras")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Modelos {
-
-	private static final long serialVersionUID = 1L;
-
+public class Compras {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
-	@Column(name = "nombre")
-	private String nombre;
-	
-	@Column(name = "descripcion")
-	private String descripcion;
+	@ManyToOne 
+	@Column(name = "clienteid")
+	private Cliente clienteid;
 	
 	@Column(name = "fecha_creacion")
-	@CreationTimestamp
+	@CreationTimestamp 
 	private Date fecha_creacion;
 	
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
-	public Modelos() {
+	public Compras() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Modelos(Long id, String nombre, String descripcion, Date fecha_creacion, Date fecha_borrado) {
+	public Compras(Long id, Cliente clienteid, Date fecha_creacion, Date fecha_borrado) {
 		super();
 		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
+		this.clienteid = clienteid;
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_borrado = fecha_borrado;
 	}
@@ -61,20 +57,12 @@ public class Modelos {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Cliente getClienteid() {
+		return clienteid;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setClienteid(Cliente clienteid) {
+		this.clienteid = clienteid;
 	}
 
 	public Date getFecha_creacion() {
@@ -92,11 +80,7 @@ public class Modelos {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
+	
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
-	
+
 }

@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("modelos")
+@RequestMapping("bicicletas")
 @CrossOrigin(origins = "*")
-public class ModelosControlador {
+public class BicicletaController {
 
+	
 }

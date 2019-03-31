@@ -1,18 +1,21 @@
 package com.RocketbackEndJwt.api.entities;
 
+import java.sql.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 @Entity
 @Table(name = "bicicletas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
-public class Bicicletas {
+public class Bicicleta {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -37,13 +40,26 @@ public class Bicicletas {
 	
 	@Column(name = "usada")
 	private boolean usada;
+	
+	@Column(name = "fecha_borrado")
+	private Date fecha_borrado;
+	
+	@ManyToOne
+	private Categoria categoria;
+	
+	@ManyToOne
+	private Marca marca;
+	
+	@ManyToOne
+	private Modelo modelo;
+	
 
-	public Bicicletas() {
+	public Bicicleta() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bicicletas(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada) {
+	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada) {
 		super();
 		this.id = id;
 		this.referencia = referencia;
