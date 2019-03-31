@@ -51,6 +51,38 @@ public class Bicicleta implements Serializable {
 	@Column(name = "descripcion")
 	private String descripcion;
 	
+	public Long getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Long categoria) {
+		this.categoria = categoria;
+	}
+
+	public Long getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Long marca) {
+		this.marca = marca;
+	}
+
+	public Long getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(Long modelo) {
+		this.modelo = modelo;
+	}
+
+	public Date getFecha_borrado() {
+		return fecha_borrado;
+	}
+
+	public void setFecha_borrado(Date fecha_borrado) {
+		this.fecha_borrado = fecha_borrado;
+	}
+
 	@Column(name = "precio")
 	private Long precio;
 	
