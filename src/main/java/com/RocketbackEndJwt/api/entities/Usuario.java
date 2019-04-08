@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
 public class Usuario implements Serializable {
 
