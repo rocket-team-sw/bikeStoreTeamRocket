@@ -1,5 +1,6 @@
 package com.RocketbackEndJwt.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +31,8 @@ public class BicicletaController {
 	private BIcicletaDAO bicicletaDao;
 	
 	private Response<Bicicleta> respuesta;
+	private Bicicleta emptyObject = new Bicicleta();
+	private ArrayList<Bicicleta> emptyList = new ArrayList<>();
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response<Bicicleta>> create(@RequestBody Bicicleta bicicleta, HttpServletRequest request,
@@ -36,10 +40,10 @@ public class BicicletaController {
 		try {
 			// TODO: Validate data
 			bicicletaDao.save(bicicleta);
-			respuesta = new Response<>(bicicleta, "Ok", 200);
+			respuesta = new Response<>(bicicleta, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>("Error creando Bicicleta", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error creando Bicicleta", 400);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -48,30 +52,30 @@ public class BicicletaController {
 	public @ResponseBody ResponseEntity<Response<Bicicleta>> list(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			List<Bicicleta> bicicletas = (List<Bicicleta>)bicicletaDao.findAll();
-			respuesta = new Response<>(bicicletas, "Ok", 200);
+			List<Bicicleta> bicicletas = (List<Bicicleta>) bicicletaDao.findAll();
+			respuesta = new Response<>(emptyObject, bicicletas, "Ok", 200);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>("Error Leyendo bicicletas", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo bicicletas", 400);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Response<Bicicleta>> get(Long id, HttpServletRequest request,
+	public @ResponseBody ResponseEntity<Response<Bicicleta>> get(@PathVariable Long id, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
-			respuesta = new Response<>(bicicleta, "Ok", 200);
+			respuesta = new Response<>(bicicleta, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>("Error Leyendo bicicleta", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo bicicleta", 400);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Response<Bicicleta>> update(Long id, @RequestBody Bicicleta newBicicleta, HttpServletRequest request,
+	public @ResponseBody ResponseEntity<Response<Bicicleta>> update(@PathVariable Long id, @RequestBody Bicicleta newBicicleta, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
@@ -85,24 +89,24 @@ public class BicicletaController {
 			bicicleta.setModelo(newBicicleta.getModelo());
 			bicicleta.setMarca(newBicicleta.getMarca());
 			
-			respuesta = new Response<>(bicicleta, "Ok", 200);
+			respuesta = new Response<>(bicicleta, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>("Error actualizando bicicleta", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error actualizando bicicleta", 400);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Response<Bicicleta>> delete(Long id, HttpServletRequest request,
+	public @ResponseBody ResponseEntity<Response<Bicicleta>> delete(@PathVariable Long id, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
 			bicicletaDao.delete(bicicleta);
-			respuesta = new Response<>("Ok", 200);
+			respuesta = new Response<>(emptyObject, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>("Error borrando bicicleta", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error borrando bicicleta", 400);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}

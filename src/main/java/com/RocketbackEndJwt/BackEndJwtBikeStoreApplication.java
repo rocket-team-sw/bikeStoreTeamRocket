@@ -10,8 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import com.RocketbackEndJwt.api.entities.Usuario;
-import com.RocketbackEndJwt.api.repositories.UserRepository;
-import com.RocketbackEndJwt.enums.ProfileEnum;
+import com.RocketbackEndJwt.api.service.UserDao;
 
 @SpringBootApplication
 public class BackEndJwtBikeStoreApplication extends SpringBootServletInitializer {
@@ -26,37 +25,22 @@ public class BackEndJwtBikeStoreApplication extends SpringBootServletInitializer
 	}
 	
 	@Bean
-	CommandLineRunner init(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	CommandLineRunner init(UserDao userDao, PasswordEncoder passwordEncoder) {
 		return args -> {
-			initUsers	(userRepository, passwordEncoder);
+			initUser(userDao, passwordEncoder);
 		};
 	}
 	
-	private void initUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		/*
-		User admin = new User();
-		Caja caja = new Caja();
-		admin.setUserId((long)211);
-		admin.setEmail("juanda@gmail.es");
-		admin.setPassword(passwordEncoder.encode("12345"));
-		admin.setRole("ROLE_ADMIN");
-		admin.setNombreCompleto("Juan David Gallego Gomez");
-		caja.setIdCaja((long)(1));
-		admin.setCaja(caja);
-		User find = userRepository.findByEmail("juanda@gmail.es");
-		if (find == null) {
-			userRepository.save(admin);
+	private void initUser(UserDao userDao, PasswordEncoder passwordEncoder) {
+		Usuario admin = new Usuario();
+		admin.setEmail("admin@mail.com");
+		admin.setPassword(passwordEncoder.encode("123456"));
+		admin.setRole("ROLE_SUPER");
+		admin.setUserName("Admin");
+		admin.setApellidos("Admin");
+		
+		if (userDao.findByEmail("admin@mail.com") == null) {
+			userDao.save(admin);
 		}
-		admin.setUserId((long)212);
-		admin.setEmail("cris@gmail.es");
-		admin.setPassword(passwordEncoder.encode("12345"));
-		admin.setRole("ROLE_ADMIN");
-		admin.setNombreCompleto("Cristian Eduardo Rodriguez Granada");
-		caja.setIdCaja((long)(1));
-		admin.setCaja(caja);
-		find = userRepository.findByEmail("cris@gmail.es");
-		if (find == null) {
-			userRepository.save(admin);
-		}*/
 	}
 }
