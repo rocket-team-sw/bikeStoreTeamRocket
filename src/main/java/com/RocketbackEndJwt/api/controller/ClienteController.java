@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RocketbackEndJwt.api.entities.Cliente;
+import com.RocketbackEndJwt.api.entities.Modelo;
 import com.RocketbackEndJwt.api.response.Response;
 import com.RocketbackEndJwt.api.service.ClienteDAO;
 
@@ -39,12 +40,12 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<Cliente>> create(@RequestBody Cliente cliente, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			// TODO: Validate data
+			validate(cliente);
 			dao.save(cliente);
 			respuesta = new Response<>(cliente, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>(emptyObject, emptyList, "Error creando clientes", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error creando clientes. " + e.getMessage(), 400);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -66,11 +67,17 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<Cliente>> get(@PathVariable Long id, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
+			if (id == null) {
+				error("Debe ingresar un id");
+			}
 			Cliente cliente = dao.findById(id).get();
+			if (cliente == null) {
+				error("El id no esta registrado");
+			}
 			respuesta = new Response<>(cliente, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo cliente", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo cliente. " + e.getMessage(), 400);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -79,7 +86,14 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<Cliente>> update(@PathVariable Long id, @RequestBody Cliente newCliente, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
+			if (id == null) {
+				error("Debe ingresar un id");
+			}
 			Cliente cliente = dao.findById(id).get();
+			if (cliente == null) {
+				error("El id no esta registrado");
+			}
+			validate(newCliente);
 			cliente.setNombre(newCliente.getNombre());
 			cliente.setApellidos(newCliente.getApellidos());
 			cliente.setEmail(newCliente.getEmail());
@@ -91,7 +105,7 @@ public class ClienteController {
 			respuesta = new Response<>(emptyObject, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>(emptyObject, emptyList, "Error actualizando cliente", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error actualizando cliente. " + e.getMessage(), 400);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -100,14 +114,50 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<Cliente>> delete(@PathVariable Long id, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
+			if (id == null) {
+				error("Debe ingresar un id");
+			}
 			Cliente cliente = dao.findById(id).get();
+			if (cliente == null) {
+				error("El id no esta registrado");
+			}
 			dao.delete(cliente);
 			respuesta = new Response<>(emptyObject, emptyList, "Ok", 200);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
-			respuesta = new Response<>(emptyObject, emptyList, "Error borrando cliente", 400);
+			respuesta = new Response<>(emptyObject, emptyList, "Error borrando cliente. " + e.getMessage(), 400);
 			return new ResponseEntity<Response<Cliente>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
 
+	private void validate(Cliente cliente) throws Exception {
+		
+		if (cliente.getNombre() == null) {
+			error("Debe ingresar un nombre");
+		}
+		
+		if (cliente.getNombre().length() < 3) {
+			error("DEbe ingresar un nombre mas largo");
+		}
+		
+		if (cliente.getApellidos() == null) {
+			error("Debe ingresar apellidos");
+		}
+		
+		if (cliente.getApellidos().length() < 3) {
+			error("DEbe ingresar apellido mas largo");
+		}
+		
+		if (cliente.getEmail() == null) {
+			error("Debe ingresar un email");
+		}
+		
+		if (cliente.getEmail().length() < 7) {
+			error("DEbe ingresar un email mas largo");
+		}
+	}
+	
+	private void error(String msg) throws Exception {
+		throw new Exception(msg);
+	}
 }
