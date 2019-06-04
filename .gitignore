@@ -2,3 +2,8 @@ target/classes/com/RocketbackEndJwt/api/**/*.class
 **/*.class
 **/*.prefs
 **/*.MF
+target
+**/*.properties
+.DS_Store
+.settings
+**/*.war
