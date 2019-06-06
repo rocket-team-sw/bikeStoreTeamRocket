@@ -8,5 +8,5 @@ package com.RocketbackEndJwt.api.response;
 public class ResponseCode {
 	
 	public final static int OK_CODE = 200;
-	public final static int ERROR_CODE = 200;
+	public final static int ERROR_CODE = 400;
 }
