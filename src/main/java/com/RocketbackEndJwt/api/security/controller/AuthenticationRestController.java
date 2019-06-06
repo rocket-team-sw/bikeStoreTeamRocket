@@ -37,6 +37,12 @@ public class AuthenticationRestController {
 	@Autowired
 	private UserDao userService;
 	
+	/**
+	 * 
+	 * @param authenticationRequest
+	 * @return un nuevo token de usuario y un usuario asociado a el, se envia la contraseña en Null
+	 * @throws Exception
+	 */
 	@PostMapping(value="/api/auth")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
 		final Authentication authentication = authenticationManager.authenticate(
@@ -53,6 +59,11 @@ public class AuthenticationRestController {
 		user.setPassword(null);
 		return ResponseEntity.ok(new CurrentUser(token, user));
 	}
+	/**
+	 * 
+	 * @param request
+	 * @return token del usuario refrescado 
+	 */
 	
 	@PostMapping(value = "/api/refresh")
 	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request){

@@ -32,9 +32,11 @@ import com.RocketbackEndJwt.api.service.BIcicletaDAO;
 @CrossOrigin(origins = "*")
 public class BicicletaController {
 
+	/**
+	 * bicicletaDao declaracion de Data access Object para la conexion con la Bd
+	 */
 	@Autowired
-	private BIcicletaDAO bicicletaDao;
-	
+	private BIcicletaDAO bicicletaDao;	
 	private Response<Bicicleta> respuesta;
 	private Bicicleta emptyObject = new Bicicleta();
 	private ArrayList<Bicicleta> emptyList = new ArrayList<>();
