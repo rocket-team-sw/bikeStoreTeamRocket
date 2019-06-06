@@ -13,12 +13,19 @@ import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+/**
+ * Clase para mapear Marcas
+ * @author juanfvasquez
+ * 03.Feb.2019
+ */
 @Entity
 @Table(name = "marcas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
 public class Marca {
 	
 	private static final long serialVersionUID = 1L;
+	private static final int LONGITUD_MINIMA_NOMBRE = 5;
+	private static final int LONGITUD_MINIMA_DESCRIPCION = 10;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +45,10 @@ public class Marca {
 	
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
+	
+	/**
+	 * Constructores para Marca
+	 */
 
 	public Marca() {
 		super();
@@ -52,6 +63,10 @@ public class Marca {
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_borrado = fecha_borrado;
 	}
+	
+	/**
+	 * Sección de Setters y Getters
+	 */
 
 	public Long getId() {
 		return id;
@@ -92,12 +107,40 @@ public class Marca {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	/**
+	 * Fin Sección Setters y Getters
+	 */
+	
+	/**
+	 * Método para validar los datos de una marca antes de crear o actualizar
+	 * @throws Exception lanzada si se encuentra un dato no válido
+	 */
+	public void validar() throws Exception {
+		
+		if (getNombre() == null) {
+			throw new Exception("Debe ingresar un nombre");
+		}
+		
+		if (getNombre().length() < LONGITUD_MINIMA_NOMBRE) {
+			throw new Exception("DEbe ingresar un nombre mas largo");
+		}
+		
+		if (getDescripcion() == null) {
+			throw new Exception("Debe ingresar una descripcion");
+		}
+		
+		if (getDescripcion().length() < LONGITUD_MINIMA_DESCRIPCION) {
+			throw new Exception("Debe ingresar una descripcion mas larga");
+		}
 	}
 	
-	
-	
-
+	/**
+	 * Método para actualizar una marca
+	 * @param nuevosDatos objeto tipo Marca con los nuevos datos
+	 */
+	public void actualizar(final Marca nuevosDatos) {
+		setNombre(nuevosDatos.getNombre());
+		setDescripcion(nuevosDatos.getDescripcion());
+		setFecha_borrado(nuevosDatos.getFecha_borrado());
+	}
 }

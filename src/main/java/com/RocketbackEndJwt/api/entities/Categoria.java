@@ -13,11 +13,18 @@ import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+/**
+ * Clase para mapear las categorías
+ * @author juanfvasquez
+ * 03.Feb.2019
+ */
 @Entity
 @Table(name = "categorias")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
 public class Categoria {
 	private static final long serialVersionUID = 1L;
+	private static final int LONGITUD_MINIMA_NOMBRE = 5;
+	private static final int LONGITUD_MINIMA_DESCRIPCION = 10;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +45,9 @@ public class Categoria {
 	@Column(name = "fecha_borrado")
 	private Date fecha_borrado;
 
+	/**
+	 * Constructores para categorías
+	 */
 	public Categoria() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -52,6 +62,9 @@ public class Categoria {
 		this.fecha_borrado = fecha_borrado;
 	}
 
+	/**
+	 * Sección de SETTERS y GETTERS
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -91,8 +104,40 @@ public class Categoria {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	/**
+	 * Fin Sección de SETTERS y GETTERS
+	 */
+	
+	/**
+	 * Método para validar los datos de una categoría antes de crear o actualizar
+	 * @throws Exception lanzada si se encuentra un dato no válido
+	 */
+	public void validate() throws Exception {
+		
+		if (getNombre() == null) {
+			throw new Exception("Debe ingresar un nombre");
+		}
+		
+		if (getNombre().length() < LONGITUD_MINIMA_NOMBRE) {
+			throw new Exception("DEbe ingresar un nombre mas largo");
+		}
+		
+		if (getDescripcion() == null) {
+			throw new Exception("Debe ingresar una descripcion");
+		}
+		
+		if (getDescripcion().length() < LONGITUD_MINIMA_DESCRIPCION) {
+			throw new Exception("Debe ingresar una descripcion mas larga");
+		}
+	}
+	
+	/**
+	 * Método para actualizar los datos de la categoría
+	 * @param nuevosDatos objeto tipo Categoria con los nuevos datos
+	 */
+	public void actualizar(final Categoria nuevosDatos) {
+		setDescripcion(nuevosDatos.getDescripcion());
+		setFecha_borrado(nuevosDatos.getFecha_borrado());
+		setNombre(nuevosDatos.getNombre());
 	}
 }

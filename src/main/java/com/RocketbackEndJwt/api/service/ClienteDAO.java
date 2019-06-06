@@ -4,6 +4,11 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.RocketbackEndJwt.api.entities.Cliente;
 
+/**
+ * Definición de interfaz para la conexión con la tabla clientes
+ * @author juanfvasquez
+ * 03.Feb.2019
+ */
 public interface ClienteDAO extends CrudRepository<Cliente, Long> {
 
 }

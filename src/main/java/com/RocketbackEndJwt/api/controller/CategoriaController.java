@@ -26,6 +26,7 @@ import com.RocketbackEndJwt.api.service.CategoriaDAO;
 /**
  * Clase controladora para las peticiones relacionadas con categorias
  * @author juanfvasquez
+ * 03.Feb.2019
  */
 @RestController
 @RequestMapping("api/categorias")
@@ -48,7 +49,7 @@ public class CategoriaController {
 	public @ResponseBody ResponseEntity<Response<Categoria>> create(@RequestBody Categoria categoria, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			validate(categoria);
+			categoria.validate();
 			dao.save(categoria);
 			respuesta = new Response<>(categoria,emptyList, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Categoria>>(respuesta, HttpStatus.OK);
@@ -85,11 +86,11 @@ public class CategoriaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Categoria categoria = dao.findById(id).get();
 			if (categoria == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
 			respuesta = new Response<>(categoria, emptyList, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Categoria>>(respuesta, HttpStatus.OK);
@@ -109,13 +110,13 @@ public class CategoriaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Categoria categoria = dao.findById(id).get();
 			if (categoria == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
-			validate(newCategoria);
+			newCategoria.validate();
 			categoria.setDescripcion(newCategoria.getDescripcion());
 			categoria.setFecha_borrado(newCategoria.getFecha_borrado());
 			categoria.setNombre(newCategoria.getNombre());
@@ -137,11 +138,11 @@ public class CategoriaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Categoria categoria = dao.findById(id).get();
 			if (categoria == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
 			dao.delete(categoria);
 			respuesta = new Response<>(emptyObject, emptyList, "Ok", ResponseCode.OK_CODE);
@@ -150,38 +151,5 @@ public class CategoriaController {
 			respuesta = new Response<>(emptyObject, emptyList, "Error borrando categoria", ResponseCode.ERROR_CODE);
 			return new ResponseEntity<Response<Categoria>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
-	}
-	
-	/**
-	 * Método para validar los datos de una categoría antes de crear o actualizar
-	 * @param categoria objeto Categoría con los datos a validar
-	 * @throws Exception lanzada si se encuentra un dato no válido
-	 */
-	private void validate(Categoria categoria) throws Exception {
-		
-		if (categoria.getNombre() == null) {
-			error("Debe ingresar un nombre");
-		}
-		
-		if (categoria.getNombre().length() < 5) {
-			error("DEbe ingresar un nombre mas largo");
-		}
-		
-		if (categoria.getDescripcion() == null) {
-			error("Debe ingresar una descripcion");
-		}
-		
-		if (categoria.getDescripcion().length() < 10) {
-			error("Debe ingresar una descripcion mas larga");
-		}
-	}
-	
-	/**
-	 * Método para lanzar una excepcion con un mensaje
-	 * @param msg Mensaje a lanzar
-	 * @throws Exception
-	 */
-	private void error(String msg) throws Exception {
-		throw new Exception(msg);
 	}
 }

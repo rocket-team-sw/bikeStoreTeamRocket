@@ -48,7 +48,7 @@ public class BicicletaController {
 	public @ResponseBody ResponseEntity<Response<Bicicleta>> create(@RequestBody Bicicleta bicicleta, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			validate(bicicleta);
+			bicicleta.validar();
 			bicicletaDao.save(bicicleta);
 			respuesta = new Response<>(bicicleta, emptyList, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
@@ -85,11 +85,11 @@ public class BicicletaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
 			if (bicicleta == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
 			respuesta = new Response<>(bicicleta, emptyList, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
@@ -110,22 +110,14 @@ public class BicicletaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
 			if (bicicleta == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
-			bicicleta.setReferencia(newBicicleta.getReferencia());
-			bicicleta.setNombre(newBicicleta.getNombre());
-			bicicleta.setDescripcion(newBicicleta.getDescripcion());
-			bicicleta.setPrecio(newBicicleta.getPrecio());
-			bicicleta.setUsada(newBicicleta.isUsada());
-			bicicleta.setFecha_borrado(newBicicleta.getFecha_borrado());
-			bicicleta.setCategoria(newBicicleta.getCategoria());
-			bicicleta.setModelo(newBicicleta.getModelo());
-			bicicleta.setMarca(newBicicleta.getMarca());
-			
+			newBicicleta.validar();
+			bicicleta.actualizar(newBicicleta);
 			respuesta = new Response<>(bicicleta, emptyList, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
@@ -143,11 +135,11 @@ public class BicicletaController {
 			HttpServletResponse response) {
 		try {
 			if (id == null) {
-				error("Debe ingresar un id válido");
+				throw new Exception("Debe ingresar un id válido");
 			}
 			Bicicleta bicicleta = bicicletaDao.findById(id).get();
 			if (bicicleta == null) {
-				error("El id no esta registrado");
+				throw new Exception("El id no esta registrado");
 			}
 			bicicletaDao.delete(bicicleta);
 			respuesta = new Response<>(emptyObject, emptyList, "Ok", ResponseCode.OK_CODE);
@@ -156,49 +148,5 @@ public class BicicletaController {
 			respuesta = new Response<>(emptyObject, emptyList, "Error borrando bicicleta. " + e.getMessage(), ResponseCode.ERROR_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
-	}
-	
-	/**
-	 * Método para validar los datos de una bicicleta antes de crear o actualizar
-	 * @param bicicleta objeto Bicicleta con los datos a validar
-	 * @throws Exception Lanzada si se encuentra que algún dato no es válido
-	 */
-	private void validate(Bicicleta bicicleta) throws Exception {
-		if (bicicleta.getReferencia() == null) {
-			error("Debe ingresar una referencia");
-		}
-		
-		if (bicicleta.getReferencia().length() < 5) {
-			error("Debe ingresar una referencia mas larga");
-		}
-		
-		if (bicicleta.getNombre() == null) {
-			error("Debe ingresar un nombre");
-		}
-		
-		if (bicicleta.getNombre().length() < 5) {
-			error("DEbe ingresar un nombre mas largo");
-		}
-		
-		if (bicicleta.getDescripcion() == null) {
-			error("Debe ingresar una descripcion");
-		}
-		
-		if (bicicleta.getDescripcion().length() < 10) {
-			error("Debe ingresar una descripcion mas larga");
-		}
-		
-		if (bicicleta.getPrecio() < 0) {
-			error("Debe ingresar un precio válido");
-		}
-	}
-	
-	/**
-	 * Método para lanzar excepcion con un mensaje
-	 * @param msg Mensaje a lanzar
-	 * @throws Exception
-	 */
-	private void error(String msg) throws Exception {
-		throw new Exception(msg);
 	}
 }

@@ -13,28 +13,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+/**
+ * Clase para mapear las bicicletas
+ * @author juanfvasquez
+ * 03-Feb-2019
+ */
 @Entity
 @Table(name = "bicicletas")
 @TableGenerator(name = "tab", initialValue = 211, allocationSize = 1)
 public class Bicicleta implements Serializable {
 
-	
-	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada,
-			Date fecha_borrado, Long categoria, Long marca, Long modelo) {
-		super();
-		this.id = id;
-		this.referencia = referencia;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.usada = usada;
-		this.fecha_borrado = fecha_borrado;
-		this.categoria = categoria;
-		this.marca = marca;
-		this.modelo = modelo;
-	}
-
 	private static final long serialVersionUID = 1L;
+	private static final int LONGITUD_MINIMA_REFS = 5;
+	private static final int LONGITUD_MINIMA_DESCRIPCION = 10;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,38 +41,6 @@ public class Bicicleta implements Serializable {
 	
 	@Column(name = "descripcion")
 	private String descripcion;
-	
-	public Long getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Long categoria) {
-		this.categoria = categoria;
-	}
-
-	public Long getMarca() {
-		return marca;
-	}
-
-	public void setMarca(Long marca) {
-		this.marca = marca;
-	}
-
-	public Long getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(Long modelo) {
-		this.modelo = modelo;
-	}
-
-	public Date getFecha_borrado() {
-		return fecha_borrado;
-	}
-
-	public void setFecha_borrado(Date fecha_borrado) {
-		this.fecha_borrado = fecha_borrado;
-	}
 
 	@Column(name = "precio")
 	private Long precio;
@@ -101,13 +60,18 @@ public class Bicicleta implements Serializable {
 	@Column(name = "modelo_id")
 	private Long modelo;
 	
-
+	
+	/**
+	 * Constructores de una bicicleta
+	 */
+	
 	public Bicicleta() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada) {
+	
+	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada,
+			Date fecha_borrado, Long categoria, Long marca, Long modelo) {
 		super();
 		this.id = id;
 		this.referencia = referencia;
@@ -115,8 +79,15 @@ public class Bicicleta implements Serializable {
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.usada = usada;
+		this.fecha_borrado = fecha_borrado;
+		this.categoria = categoria;
+		this.marca = marca;
+		this.modelo = modelo;
 	}
 
+	/**
+	 * Sección de SETTERS y GETTERS
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -163,6 +134,90 @@ public class Bicicleta implements Serializable {
 
 	public void setUsada(boolean usada) {
 		this.usada = usada;
-	}	
+	}
 	
+	public Long getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Long categoria) {
+		this.categoria = categoria;
+	}
+
+	public Long getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Long marca) {
+		this.marca = marca;
+	}
+
+	public Long getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(Long modelo) {
+		this.modelo = modelo;
+	}
+
+	public Date getFecha_borrado() {
+		return fecha_borrado;
+	}
+
+	public void setFecha_borrado(Date fecha_borrado) {
+		this.fecha_borrado = fecha_borrado;
+	}
+	/**
+	 * Fin sección SETTERS y GETTERS
+	 */
+
+	/**
+	 * Metodo para actualizar bicicleta
+	 * @param nuevosDatos objeto de tipo Bicicleta con los nuevos datos
+	 */
+	public void actualizar(final Bicicleta nuevosDatos) {
+		setReferencia(nuevosDatos.getReferencia());
+		setNombre(nuevosDatos.getNombre());
+		setDescripcion(nuevosDatos.getDescripcion());
+		setPrecio(nuevosDatos.getPrecio());
+		setUsada(nuevosDatos.isUsada());
+		setFecha_borrado(nuevosDatos.getFecha_borrado());
+		setCategoria(nuevosDatos.getCategoria());
+		setModelo(nuevosDatos.getModelo());
+		setMarca(nuevosDatos.getMarca());
+	}
+	
+	/**
+	 * Método para validar los datos de una bicicleta antes de crear o actualizar
+	 * @throws Exception Lanzada si se encuentra que algún dato no es válido
+	 */
+	public void validar() throws Exception {
+		if (getReferencia() == null) {
+			throw new Exception("Debe ingresar una referencia");
+		}
+		
+		if (getReferencia().length() < LONGITUD_MINIMA_REFS) {
+			throw new Exception("Debe ingresar una referencia mas larga");
+		}
+		
+		if (getNombre() == null) {
+			throw new Exception("Debe ingresar un nombre");
+		}
+		
+		if (getNombre().length() < LONGITUD_MINIMA_REFS) {
+			throw new Exception("DEbe ingresar un nombre mas largo");
+		}
+		
+		if (getDescripcion() == null) {
+			throw new Exception("Debe ingresar una descripcion");
+		}
+		
+		if (getDescripcion().length() < LONGITUD_MINIMA_DESCRIPCION) {
+			throw new Exception("Debe ingresar una descripcion mas larga");
+		}
+		
+		if (getPrecio() < 0) {
+			throw new Exception("Debe ingresar un precio válido");
+		}
+	}
 }
