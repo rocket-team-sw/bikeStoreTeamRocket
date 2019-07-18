@@ -149,4 +149,45 @@ public class BicicletaController {
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/**
+	 * Método para paginar la consulta de las bicicletas
+	 * @return lista con objetos Bicicleta
+	 */
+	@RequestMapping(value = "/paginar/{limit}/{offset}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Response<Bicicleta>> paginar(
+			@PathVariable int limit,
+			@PathVariable int offset,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			List<Bicicleta> bicicletas = (List<Bicicleta>) bicicletaDao.paginar(limit, offset);
+			respuesta = new Response<>(emptyObject, bicicletas, "Ok", ResponseCode.OK_CODE);
+			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
+		} catch (Exception e) {
+			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo bicicletas", ResponseCode.ERROR_CODE);
+			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	/**
+	 * Método para paginar la búsqueda de las bicicletas
+	 * @return lista con objetos Bicicleta
+	 */
+	@RequestMapping(value = "/buscar/{limit}/{offset}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Response<Bicicleta>> paginarBusqueda(
+			@PathVariable String texto,
+			@PathVariable int limit,
+			@PathVariable int offset,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			List<Bicicleta> bicicletas = (List<Bicicleta>) bicicletaDao.paginarBusqueda(texto, limit, offset);
+			respuesta = new Response<>(emptyObject, bicicletas, "Ok", ResponseCode.OK_CODE);
+			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
+		} catch (Exception e) {
+			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo bicicletas", ResponseCode.ERROR_CODE);
+			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
+		}
+	}
 }
