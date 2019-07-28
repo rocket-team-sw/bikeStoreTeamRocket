@@ -60,6 +60,9 @@ public class Bicicleta implements Serializable {
 	@Column(name = "modelo_id")
 	private Long modelo;
 	
+	@Column(name = "imagen")
+	private String imagen;
+	
 	
 	/**
 	 * Constructores de una bicicleta
@@ -71,7 +74,7 @@ public class Bicicleta implements Serializable {
 	}
 	
 	public Bicicleta(Long id, String referencia, String nombre, String descripcion, Long precio, boolean usada,
-			Date fecha_borrado, Long categoria, Long marca, Long modelo) {
+			Date fecha_borrado, Long categoria, Long marca, Long modelo, String imagen) {
 		super();
 		this.id = id;
 		this.referencia = referencia;
@@ -83,6 +86,7 @@ public class Bicicleta implements Serializable {
 		this.categoria = categoria;
 		this.marca = marca;
 		this.modelo = modelo;
+		this.imagen = imagen;
 	}
 
 	/**
@@ -167,6 +171,14 @@ public class Bicicleta implements Serializable {
 	public void setFecha_borrado(Date fecha_borrado) {
 		this.fecha_borrado = fecha_borrado;
 	}
+	
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	public String getImagen() {
+		return imagen;
+	}
 	/**
 	 * Fin sección SETTERS y GETTERS
 	 */
@@ -185,6 +197,7 @@ public class Bicicleta implements Serializable {
 		setCategoria(nuevosDatos.getCategoria());
 		setModelo(nuevosDatos.getModelo());
 		setMarca(nuevosDatos.getMarca());
+		setImagen(nuevosDatos.getImagen());
 	}
 	
 	/**
