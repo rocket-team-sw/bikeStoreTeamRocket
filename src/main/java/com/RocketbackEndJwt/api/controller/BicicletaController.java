@@ -70,6 +70,7 @@ public class BicicletaController {
 			respuesta = new Response<>(emptyObject, bicicletas, "Ok", ResponseCode.OK_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			respuesta = new Response<>(emptyObject, emptyList, "Error Leyendo bicicletas", ResponseCode.ERROR_CODE);
 			return new ResponseEntity<Response<Bicicleta>>(respuesta, HttpStatus.BAD_REQUEST);
 		}
@@ -174,7 +175,7 @@ public class BicicletaController {
 	 * Método para paginar la búsqueda de las bicicletas
 	 * @return lista con objetos Bicicleta
 	 */
-	@RequestMapping(value = "/buscar/{limit}/{offset}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/buscar/{limit}/{offset}/{texto}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response<Bicicleta>> paginarBusqueda(
 			@PathVariable String texto,
 			@PathVariable int limit,
